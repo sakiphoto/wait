@@ -42,6 +42,7 @@
             z-index: 0;
             animation: float 8s ease-in-out infinite alternate;
         }
+
         .glow-1 {
             width: 350px;
             height: 350px;
@@ -49,6 +50,7 @@
             top: 10%;
             left: 15%;
         }
+
         .glow-2 {
             width: 450px;
             height: 450px;
@@ -95,6 +97,7 @@
             font-weight: 600;
             margin-bottom: 24px;
         }
+
         .badge-dot {
             width: 8px;
             height: 8px;
@@ -138,24 +141,31 @@
             Coming Soon
         </div>
         <h1>ผลงานยังไม่โพสต์ลงเพจ</h1>
-        <p>ผลงานชิ้นนี้ยังได้ได้พสต์ลงเพจ</p>
+        <p>ผลงานชิ้นนี้ยังไม่ได้โพสต์ลงเพจ</p>
         <p>โปรดติดตามและกลับมารับชมใหม่อีกครั้ง</p>
     </div>
 
     <script>
-        // 3D Parallax Effect On Mouse Move
+        // 3D Parallax Effect On Mouse Move / Touch Move
         const card = document.getElementById('card');
 
-        document.addEventListener('mousemove', (e) => {
-            const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
-            const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
-            card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-        });
+        function handleMove(e) {
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
 
-        // Reset Card Position when Mouse Leaves
-        document.addEventListener('mouseleave', () => {
+            const xAxis = (window.innerWidth / 2 - clientX) / 25;
+            const yAxis = (window.innerHeight / 2 - clientY) / 25;
+            card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        }
+
+        function resetPosition() {
             card.style.transform = `rotateY(0deg) rotateX(0deg)`;
-        });
+        }
+
+        document.addEventListener('mousemove', handleMove);
+        document.addEventListener('mouseleave', resetPosition);
+        document.addEventListener('touchmove', handleMove);
+        document.addEventListener('touchend', resetPosition);
     </script>
 </body>
 </html>
